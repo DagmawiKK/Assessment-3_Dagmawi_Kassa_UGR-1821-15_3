@@ -1,6 +1,4 @@
-let isError = false; // Tracks if there was an error in the last calculation
-
-// Parse and evaluate the expression
+let isError = false; 
 const parseExpression = (tokens) => {
   let currentIndex = 0;
 
@@ -45,7 +43,6 @@ const parseExpression = (tokens) => {
   return parseAdditionAndSubtraction();
 };
 
-// Split input into tokens (numbers and operators)
 const tokenizeInput = (input) => {
   const tokens = [];
   let i = 0;
@@ -53,16 +50,14 @@ const tokenizeInput = (input) => {
   while (i < input.length) {
     const char = input[i];
     if (/\d/.test(char)) {
-      // Handle multi-digit numbers
       let number = char;
       while (i + 1 < input.length && /\d|\./.test(input[i + 1])) {
         number += input[++i];
       }
       tokens.push(number);
     } else if (/[+\-*/()]/.test(char)) {
-      tokens.push(char); // Add operators and parentheses
+      tokens.push(char); 
     } else if (/\s/.test(char)) {
-      // Ignore spaces
     } else {
       throw new Error(`Invalid character: ${char}`);
     }
@@ -72,18 +67,16 @@ const tokenizeInput = (input) => {
   return tokens;
 };
 
-// Evaluate the input string
 const calculate = (input) => {
   try {
     const tokens = tokenizeInput(input);
     return parseExpression(tokens);
   } catch (err) {
-    isError = true; // Set error flag
+    isError = true; 
     return `Error: ${err.message}`;
   }
 };
 
-// Event listeners for buttons
 const buttons = document.querySelectorAll("button");
 const display = document.getElementById("display");
 
@@ -91,7 +84,6 @@ buttons.forEach((button) =>
   button.addEventListener("click", () => {
     const buttonValue = button.getAttribute("data-value");
 
-    // Clear display if there was an error in the last calculation
     if (isError) {
       display.value = "";
       isError = false;
@@ -113,7 +105,6 @@ buttons.forEach((button) =>
       return;
     }
 
-    // Append button value to display
     display.value += buttonValue;
   })
 );
